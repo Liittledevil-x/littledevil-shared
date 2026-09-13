@@ -1,0 +1,26 @@
+{
+  "version": "0.1.0",
+  "source": "docs/tool-schemas.md",
+  "schemas": [
+    "submit_htf_prior",
+    "submit_escalation",
+    "submit_verdict",
+    "submit_case_against",
+    "draft_lesson",
+    "request_drilldown",
+    "get_candidate_packet",
+    "get_htf_prior",
+    "promote_to_close_watch"
+  ],
+  "error_codes": [
+    "AS_OF_VIOLATION",
+    "GATE_CLOSED",
+    "RATE_CAPPED",
+    "BUDGET_EXCEEDED",
+    "SLOT_UNAVAILABLE",
+    "NOT_FOUND",
+    "STALE_DATA",
+    "CONFIRMATION_REQUIRED",
+    "LEVEL_REF_INVALID"
+  ]
+}

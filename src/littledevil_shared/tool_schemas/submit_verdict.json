@@ -1,0 +1,63 @@
+{
+  "name": "submit_verdict",
+  "description": "The trade card. Every close-watch decision — entry, hold, tighten, exit, no-trade, or abandon — ends with exactly this call. Never free text.",
+  "input_schema": {
+    "type": "object",
+    "properties": {
+      "verdict": {"type": "string", "enum": ["NO_TRADE", "WATCH", "ENTER_LIMIT", "ENTER_STOP", "HOLD", "TIGHTEN", "EXIT", "ABANDON"]},
+      "thesis": {"type": "string"},
+      "opposing_evidence": {"type": "array", "items": {"type": "string"}},
+      "supporting_evidence": {"type": "array", "items": {"type": "string"}},
+      "competing_explanations": {
+        "type": "array",
+        "items": {"type": "object", "properties": {
+          "explanation": {"type": "string"}, "why_less_likely": {"type": "string"}
+        }, "required": ["explanation", "why_less_likely"]}
+      },
+      "plan": {
+        "type": "object",
+        "description": "Required when verdict is ENTER_LIMIT or ENTER_STOP; omitted otherwise",
+        "properties": {
+          "entry": {"type": "number"},
+          "entry_type": {"type": "string", "enum": ["limit", "stop"]},
+          "stop": {"type": "number"},
+          "targets": {"type": "array", "items": {"type": "number"}, "minItems": 1},
+          "horizon": {"type": "string"},
+          "expiry_utc": {"type": "string", "format": "date-time"},
+          "max_entry": {"type": "number"}
+        },
+        "required": ["entry", "entry_type", "stop", "targets", "horizon", "expiry_utc", "max_entry"]
+      },
+      "invalidation_condition": {"type": "string"},
+      "after_cost_rr_claimed": {"type": "number"},
+      "confidence_bucket": {"type": "string", "enum": ["low", "medium", "high"]},
+      "what_would_change_my_mind": {"type": "array", "items": {"type": "string"}},
+      "data_gaps_acknowledged": {"type": "array", "items": {"type": "string"}},
+      "requested_drilldowns": {"type": "array", "items": {"type": "string"}},
+      "next_attention": {
+        "type": "object",
+        "description": "Optional; only meaningful when verdict is WATCH or HOLD. Requests that Python wake this Demon on a specific, packet-grounded condition instead of the routine trigger cadence (scanner-attention-routing.md §8a). Never a raw timer, never a bare invented price — every condition must resolve to a level already present in this packet, and it narrows the trigger set, it never suppresses the mechanical stop, expiry, or DROP/DEMOTE checks.",
+        "properties": {
+          "conditions": {
+            "type": "array",
+            "maxItems": 3,
+            "items": {
+              "type": "object",
+              "properties": {
+                "level_ref": {"type": "string", "description": "Must name a level already present in this packet, e.g. 'pattern_lower_boundary', 'pattern_upper_boundary', 'invalidation_condition' — never a freestanding number"},
+                "side": {"type": "string", "enum": ["above", "below"]},
+                "confirm": {"type": "string", "enum": ["body_close", "touch"]},
+                "timeframe": {"type": "string", "enum": ["1m", "5m", "15m", "1h"]}
+              },
+              "required": ["level_ref", "side", "confirm", "timeframe"]
+            }
+          },
+          "release_slot": {"type": "boolean", "default": false, "description": "true: Watch-Manager DEMOTEs this candidate to LONG_WATCH now and arms the D3 pre-gate on this condition, freeing the close-watch slot. false (default): stays in CLOSE_WATCH; the condition replaces the routine cadence for this candidate only."}
+        },
+        "required": ["conditions"]
+      },
+      "abandon_reason": {"type": "string", "description": "Required when verdict is ABANDON; omitted otherwise"}
+    },
+    "required": ["verdict", "thesis", "opposing_evidence", "supporting_evidence", "confidence_bucket", "data_gaps_acknowledged"]
+  }
+}

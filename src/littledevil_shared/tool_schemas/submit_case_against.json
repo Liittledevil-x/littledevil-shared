@@ -1,0 +1,13 @@
+{
+  "name": "submit_case_against",
+  "description": "Argue the strongest case against the draft entry, or for the leading competing explanation. Terminal for the Adversary's turn.",
+  "input_schema": {
+    "type": "object",
+    "properties": {
+      "case_against": {"type": "string"},
+      "evidence_underweighted": {"type": "array", "items": {"type": "string"}},
+      "recommended_verdict": {"type": "string", "enum": ["WATCH", "NO_TRADE", "unchanged"], "description": "'unchanged' means the case is registered but doesn't rise to changing the verdict"}
+    },
+    "required": ["case_against", "evidence_underweighted", "recommended_verdict"]
+  }
+}

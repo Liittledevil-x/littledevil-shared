@@ -1,0 +1,9 @@
+{
+  "name": "get_candidate_packet",
+  "description": "Pull the current Context Builder packet for a named symbol, without registering it anywhere.",
+  "input_schema": {
+    "type": "object",
+    "properties": {"symbol": {"type": "string"}},
+    "required": ["symbol"]
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "name": "promote_to_close_watch",
+  "description": "Register this symbol with the Watch-Manager and consume a real close-watch slot in the active wallet mode. Has a real resource cost and, in Real wallet mode, an eventual money consequence. Fires only after explicit user confirmation in chat.",
+  "input_schema": {
+    "type": "object",
+    "properties": {
+      "symbol": {"type": "string"},
+      "setup_type": {"type": "string", "enum": ["T1", "T2", "T3"]},
+      "rationale": {"type": "string"},
+      "user_confirmed": {"type": "boolean", "const": true, "description": "Must be true; the call is rejected with CONFIRMATION_REQUIRED otherwise"}
+    },
+    "required": ["symbol", "setup_type", "rationale", "user_confirmed"]
+  }
+}

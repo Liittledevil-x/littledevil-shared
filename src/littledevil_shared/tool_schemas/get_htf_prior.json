@@ -1,0 +1,9 @@
+{
+  "name": "get_htf_prior",
+  "description": "Ad hoc higher-timeframe read for a named symbol, outside the normal 4H-close cadence.",
+  "input_schema": {
+    "type": "object",
+    "properties": {"symbol": {"type": "string"}},
+    "required": ["symbol"]
+  }
+}

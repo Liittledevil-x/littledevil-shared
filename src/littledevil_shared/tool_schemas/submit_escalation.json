@@ -1,0 +1,13 @@
+{
+  "name": "submit_escalation",
+  "description": "Decide whether a long-watch candidate is worth close-watch attention right now. Terminal — this is the entire escalation call.",
+  "input_schema": {
+    "type": "object",
+    "properties": {
+      "verdict": {"type": "string", "enum": ["ESCALATE_TO_CLOSE_WATCH", "STAY_LONG_WATCH", "DROP_CANDIDATE"]},
+      "thesis": {"type": "string", "description": "One paragraph, conditional"},
+      "confidence_bucket": {"type": "string", "enum": ["low", "medium", "high"]}
+    },
+    "required": ["verdict", "thesis", "confidence_bucket"]
+  }
+}

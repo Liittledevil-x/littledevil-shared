@@ -1,0 +1,48 @@
+{
+  "name": "request_drilldown",
+  "description": "Request one bounded, as_of-constrained piece of deeper evidence for the current candidate.",
+  "input_schema": {
+    "type": "object",
+    "properties": {
+      "candidate_id": {"type": "string"},
+      "tool": {"type": "string", "enum": ["get_candles", "get_orderflow", "get_orderbook", "get_liquidity_history", "estimate_execution", "get_data_health", "get_base_rate"]},
+      "params": {"type": "object"}
+    },
+    "required": ["candidate_id", "tool"],
+    "allOf": [
+      {"if": {"properties": {"tool": {"const": "get_candles"}}}, "then": {"properties": {"params": {
+        "type": "object", "properties": {
+          "timeframe": {"type": "string", "enum": ["1m", "5m", "15m", "1h", "4h", "1d"]},
+          "lookback_bars": {"type": "integer", "maximum": 300}
+        }, "required": ["timeframe"]}}}},
+      {"if": {"properties": {"tool": {"const": "get_orderflow"}}}, "then": {"properties": {"params": {
+        "type": "object", "properties": {
+          "window": {"type": "string", "enum": ["1m", "5m", "15m"]},
+          "lookback_minutes": {"type": "integer", "maximum": 120}
+        }, "required": ["window"]}}}},
+      {"if": {"properties": {"tool": {"const": "get_orderbook"}}}, "then": {"properties": {"params": {
+        "type": "object", "properties": {
+          "bands_bps": {"type": "array", "items": {"type": "integer"}, "maxItems": 4}
+        }}}}},
+      {"if": {"properties": {"tool": {"const": "get_liquidity_history"}}}, "then": {"properties": {"params": {
+        "type": "object", "properties": {
+          "price_level": {"type": "number"},
+          "lookback_minutes": {"type": "integer", "maximum": 180}
+        }, "required": ["price_level"]}}}},
+      {"if": {"properties": {"tool": {"const": "estimate_execution"}}}, "then": {"properties": {"params": {
+        "type": "object", "properties": {
+          "side": {"type": "string", "enum": ["buy", "sell"]},
+          "size_quote": {"type": "number"},
+          "price_reference": {"type": "number"}
+        }, "required": ["side", "size_quote"]}}}},
+      {"if": {"properties": {"tool": {"const": "get_data_health"}}}, "then": {"properties": {"params": {
+        "type": "object", "properties": {"channels": {"type": "array", "items": {"type": "string"}}}}}}},
+      {"if": {"properties": {"tool": {"const": "get_base_rate"}}}, "then": {"properties": {"params": {
+        "type": "object", "properties": {
+          "setup_type": {"type": "string", "enum": ["T1", "T2", "T3"]},
+          "pattern_type": {"type": "string"},
+          "conditions": {"type": "object", "description": "e.g. {\"tf_confluence\": [\"1h\",\"4h\"], \"touches\": 2}"}
+        }, "required": ["setup_type"]}}}}
+    ]
+  }
+}

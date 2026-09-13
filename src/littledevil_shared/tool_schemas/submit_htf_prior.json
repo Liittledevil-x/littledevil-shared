@@ -1,0 +1,19 @@
+{
+  "name": "submit_htf_prior",
+  "description": "Return the higher-timeframe directional read. This is the only way HTF Prior answers — it never returns free text.",
+  "input_schema": {
+    "type": "object",
+    "properties": {
+      "directional_bias": {"type": "string", "enum": ["long_friendly", "neutral", "against"]},
+      "nearest_htf_levels": {
+        "type": "array",
+        "items": {"type": "object", "properties": {
+          "price": {"type": "number"}, "type": {"type": "string"}, "dist_atr": {"type": "number"}
+        }, "required": ["price", "type", "dist_atr"]}
+      },
+      "what_would_have_to_be_true": {"type": "string", "description": "One sentence: the condition under which a long here makes sense from the HTF alone"},
+      "confidence_bucket": {"type": "string", "enum": ["low", "medium", "high"]}
+    },
+    "required": ["directional_bias", "nearest_htf_levels", "what_would_have_to_be_true", "confidence_bucket"]
+  }
+}

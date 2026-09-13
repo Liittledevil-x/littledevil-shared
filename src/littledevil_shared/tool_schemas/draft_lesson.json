@@ -1,0 +1,16 @@
+{
+  "name": "draft_lesson",
+  "description": "Draft a candidate lesson from a closed trade. Never enters a live prompt without human promotion.",
+  "input_schema": {
+    "type": "object",
+    "properties": {
+      "setup_type": {"type": "string", "enum": ["T1", "T2", "T3"]},
+      "pattern_type": {"type": "string"},
+      "regime": {"type": "string"},
+      "lesson_text": {"type": "string"},
+      "sample_size_placeholder": {"type": "string", "description": "e.g. 'n=1, needs replication' — Reviewer never claims statistical weight itself"},
+      "source_decision_ids": {"type": "array", "items": {"type": "string"}}
+    },
+    "required": ["setup_type", "lesson_text", "sample_size_placeholder", "source_decision_ids"]
+  }
+}

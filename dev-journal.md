@@ -1,7 +1,7 @@
 # Dev Journal — littledevil-shared
 
 Append-only, scoped to changes local to this repo only. Cross-repo decisions (schema changes, repo-boundary
-changes) go in root directory own `dev-journal.md` instead — see `docs/CLAUDE.md` for that distinction
+changes) go in root directory own `dev-journal.md` instead — see the workspace-root `CLAUDE.md` for that distinction
 and for the required entry format.
 
 No entries yet — this repo hasn't been built against.

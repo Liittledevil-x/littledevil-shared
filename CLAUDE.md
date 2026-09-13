@@ -13,9 +13,9 @@ Primary references: docs/data-and-events.md §1; docs/tool-schemas.md; docs/repo
 - Never fit a detector parameter against the same data used to validate it — dev/holdout split, always (docs/architecture-review.md §8, §8b).
 - A frozen decision is never edited after the fact — corrections are new rows.
 - Recording never pauses, for any reason.
-- `README.md`'s ~37x/year aspiration is never an input to any agent, prompt, config, or task — see docs/CLAUDE.md's non-negotiables for the full statement of this rule.
+- `README.md`'s ~37x/year aspiration is never an input to any agent, prompt, config, or task — see the workspace-root `CLAUDE.md`'s non-negotiables for the full statement of this rule.
 - The Vercel↔AWS boundary is never trusted by network origin, only by the minted token (docs/repo-structure.md §5).
 - No paid data sources in v1.
-- Append to dev-journal.md (this repo's local one) after every change or decision — see docs/CLAUDE.md for format.
+- Append to dev-journal.md (this repo's local one) after every change or decision — see the workspace-root `CLAUDE.md` for format.
 
 If a task seems to need something not covered by any of the above, that's a signal to stop and ask, not to invent it.
